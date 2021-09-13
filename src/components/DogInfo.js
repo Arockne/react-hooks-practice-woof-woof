@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 function DogInfo({ dog, onDogEdit }) {
   const {id, name, isGoodDog, image} = dog
-  const [isGood, setIsGood] = useState(isGoodDog)
 
   function handleGoodToggle() {
-    const updatedDog = { ...dog, isGoodDog: !isGood}
+    const updatedDog = { ...dog, isGoodDog: !isGoodDog}
     fetch(`http://localhost:3001/pups/${id}`, {
       method: 'PATCH',
       headers: {
@@ -16,7 +15,6 @@ function DogInfo({ dog, onDogEdit }) {
     .then(r => r.json())
     .then(data => {
       onDogEdit(data)
-      setIsGood(isGood => !isGood)
     })
   }
 
@@ -29,7 +27,7 @@ function DogInfo({ dog, onDogEdit }) {
           <>
             <img src={image} alt={name}/>
             <h2>{name}</h2>
-            <button onClick={handleGoodToggle}>{isGood ? 'Good Dog!' : 'Bad Dog'}</button>
+            <button onClick={handleGoodToggle}>{isGoodDog ? 'Good Dog!' : 'Bad Dog'}</button>
           </>
           :
           null
